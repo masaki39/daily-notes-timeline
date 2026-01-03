@@ -312,7 +312,11 @@ export class DailyNotesTimelineController {
         this.startIndex = start;
         this.endIndex = end;
         for (let i = start; i <= end; i += 1) {
-            await this.renderNote(this.noteFiles[i], 'append', i);
+            const file = this.noteFiles[i];
+            if (!file) {
+                continue;
+            }
+            await this.renderNote(file, 'append', i);
         }
         this.updateRenderedRangeFromDom();
     }
@@ -332,6 +336,9 @@ export class DailyNotesTimelineController {
                 return content;
             }
             const line = lines[lineIndex];
+            if (!line) {
+                return content;
+            }
             const updated = line.replace(/^(\s*(?:[-*+]|\d+\.)\s+\[)([ xX])(\])/, `$1${checked ? 'x' : ' '}$3`);
             if (updated === line) {
                 return content;

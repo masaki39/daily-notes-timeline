@@ -8,11 +8,16 @@ export function findHeadingSectionRange(lines: string[], headingText: string): H
     let startIndex = -1;
     let level = 1;
     for (let i = 0; i < lines.length; i += 1) {
-        const match = lines[i].match(/^(#+)\s+(.*)$/);
+        const line = lines[i];
+        if (!line) {
+            continue;
+        }
+        const match = line.match(/^(#+)\s+(.*)$/);
         if (!match) {
             continue;
         }
-        const [, hashes, text] = match;
+        const hashes = match[1] ?? '';
+        const text = match[2] ?? '';
         if (text.trim() === targetText) {
             startIndex = i;
             level = hashes.length;
@@ -24,8 +29,13 @@ export function findHeadingSectionRange(lines: string[], headingText: string): H
     }
     let endIndex = lines.length;
     for (let i = startIndex + 1; i < lines.length; i += 1) {
-        const headingMatch = lines[i].match(/^(#+)\s/);
-        if (headingMatch && headingMatch[1].length <= level) {
+        const line = lines[i];
+        if (!line) {
+            continue;
+        }
+        const headingMatch = line.match(/^(#+)\s/);
+        const hashes = headingMatch?.[1] ?? '';
+        if (hashes.length > 0 && hashes.length <= level) {
             endIndex = i;
             break;
         }

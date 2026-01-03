@@ -21,7 +21,7 @@ export function buildDateIndex(files: TFile[], resolveDateKey: (file: TFile) => 
     const dateNumbers = dateKeys.map(key => dateKeyToNumber(key));
     const indexByDateKey = new Map<string, number>();
     for (let i = 0; i < dateKeys.length; i += 1) {
-        const key = dateKeys[i];
+        const key = dateKeys[i] ?? '';
         if (key) {
             indexByDateKey.set(key, i);
         }
@@ -45,7 +45,8 @@ export async function findNearestIndexWithContent(options: FindNearestOptions): 
     const targetNumber = dateKeyToNumber(options.targetDateKey);
     if (!Number.isFinite(targetNumber) || Number.isNaN(targetDate.getTime())) {
         for (let i = 0; i < length; i += 1) {
-            if (await options.hasFilteredContent(options.files[i])) {
+            const file = options.files[i];
+            if (file && await options.hasFilteredContent(file)) {
                 return i;
             }
         }
@@ -57,7 +58,7 @@ export async function findNearestIndexWithContent(options: FindNearestOptions): 
     while (left <= right) {
         const mid = Math.floor((left + right) / 2);
         const midNumber = options.index.dateNumbers[mid];
-        if (!Number.isFinite(midNumber)) {
+        if (midNumber === undefined || !Number.isFinite(midNumber)) {
             left = mid + 1;
             continue;
         }
@@ -82,16 +83,19 @@ export async function findNearestIndexWithContent(options: FindNearestOptions): 
     }
     let startIndex = candidates[0] ?? 0;
     if (candidates.length > 1) {
-        const firstKey = options.index.dateKeys[candidates[0]];
-        const secondKey = options.index.dateKeys[candidates[1]];
-        if (firstKey && secondKey) {
+        const firstCandidate = candidates[0];
+        const secondCandidate = candidates[1];
+        const firstKey = options.index.dateKeys[firstCandidate ?? 0] ?? '';
+        const secondKey = options.index.dateKeys[secondCandidate ?? 0] ?? '';
+        if (firstKey && secondKey && firstCandidate !== undefined && secondCandidate !== undefined) {
             const firstDiff = Math.abs(getDateFromKey(firstKey).getTime() - targetDate.getTime());
             const secondDiff = Math.abs(getDateFromKey(secondKey).getTime() - targetDate.getTime());
-            startIndex = firstDiff <= secondDiff ? candidates[0] : candidates[1];
+            startIndex = firstDiff <= secondDiff ? firstCandidate : secondCandidate;
         }
     }
 
-    if (await options.hasFilteredContent(options.files[startIndex])) {
+    const startFile = options.files[startIndex];
+    if (startFile && await options.hasFilteredContent(startFile)) {
         return startIndex;
     }
 
@@ -129,11 +133,17 @@ export async function findNearestIndexWithContent(options: FindNearestOptions): 
     for (let i = 0; i < orderedCandidates.length; i += batchSize) {
         const batch = orderedCandidates.slice(i, i + batchSize);
         const results = await Promise.all(
-            batch.map(index => options.hasFilteredContent(options.files[index]))
+            batch.map(index => {
+                const file = options.files[index];
+                return file ? options.hasFilteredContent(file) : Promise.resolve(false);
+            })
         );
         for (let j = 0; j < results.length; j += 1) {
             if (results[j]) {
-                return batch[j];
+                const candidate = batch[j];
+                if (candidate !== undefined) {
+                    return candidate;
+                }
             }
         }
     }

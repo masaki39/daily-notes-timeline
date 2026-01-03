@@ -78,7 +78,11 @@ export class TimelineNoteFilesCache {
         }
         let insertIndex = this.cache.length;
         for (let i = 0; i < this.cache.length; i += 1) {
-            const existingKey = this.getDateKeyFromFile(this.cache[i]);
+            const existingFile = this.cache[i];
+            if (!existingFile) {
+                continue;
+            }
+            const existingKey = this.getDateKeyFromFile(existingFile);
             const existingNumber = dateKeyToNumber(existingKey ?? '');
             if (!Number.isFinite(existingNumber)) {
                 continue;

@@ -88,10 +88,14 @@ export async function loadPrevious(options: LoaderOptions): Promise<LoaderResult
 
     for (let i = options.startIndex - 1; i >= 0 && renderedCount < targetCount; i -= 1) {
         newStart = i;
-        if (!await options.hasFilteredContent(options.noteFiles[i])) {
+        const file = options.noteFiles[i];
+        if (!file) {
             continue;
         }
-        await options.renderNote(options.noteFiles[i], 'prepend', i);
+        if (!await options.hasFilteredContent(file)) {
+            continue;
+        }
+        await options.renderNote(file, 'prepend', i);
         renderedCount += 1;
     }
 
@@ -118,10 +122,14 @@ export async function loadNext(options: LoaderOptions): Promise<LoaderResult> {
 
     for (let i = options.endIndex + 1; i < options.noteFiles.length && renderedCount < targetCount; i += 1) {
         newEnd = i;
-        if (!await options.hasFilteredContent(options.noteFiles[i])) {
+        const file = options.noteFiles[i];
+        if (!file) {
             continue;
         }
-        await options.renderNote(options.noteFiles[i], 'append', i);
+        if (!await options.hasFilteredContent(file)) {
+            continue;
+        }
+        await options.renderNote(file, 'append', i);
         renderedCount += 1;
     }
 

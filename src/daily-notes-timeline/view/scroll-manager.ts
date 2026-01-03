@@ -106,7 +106,12 @@ export class TimelineScrollManager {
 
     scrollToTargetIndex(targetIndex: number, offset: number) {
         const noteFiles = this.getNoteFiles();
-        const targetKey = this.resolveDateKey(noteFiles[targetIndex]);
+        const targetFile = noteFiles[targetIndex];
+        if (!targetFile) {
+            this.scrollToIndex(targetIndex);
+            return;
+        }
+        const targetKey = this.resolveDateKey(targetFile);
         this.debugLog('scrollToTargetIndex', { targetIndex, targetKey, offset });
         if (targetKey) {
             this.scrollToDateKey(targetKey, offset);

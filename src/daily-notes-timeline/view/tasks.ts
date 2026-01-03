@@ -29,6 +29,9 @@ export function mapTaskLineIndices(
     const end = range ? Math.min(lines.length, range.end) : lines.length;
     for (let i = start; i < end; i += 1) {
         const line = lines[i];
+        if (!line) {
+            continue;
+        }
         if (!isTaskLine(line)) {
             continue;
         }
@@ -48,7 +51,15 @@ export function mapTaskLineIndices(
             continue;
         }
         let cursor = cursorByLine.get(taskLine) ?? 0;
-        while (cursor < candidates.length && candidates[cursor] < searchFrom) {
+        while (cursor < candidates.length) {
+            const candidate = candidates[cursor];
+            if (candidate === undefined) {
+                cursor += 1;
+                continue;
+            }
+            if (candidate >= searchFrom) {
+                break;
+            }
             cursor += 1;
         }
         if (cursor >= candidates.length) {
@@ -56,6 +67,10 @@ export function mapTaskLineIndices(
             continue;
         }
         const index = candidates[cursor];
+        if (index === undefined) {
+            cursorByLine.set(taskLine, cursor + 1);
+            continue;
+        }
         cursorByLine.set(taskLine, cursor + 1);
         indices.push(index);
         searchFrom = index + 1;
@@ -76,11 +91,15 @@ export async function attachTaskToggleHandler(options: TaskToggleOptions): Promi
     const taskLineIndices = mapTaskLineIndices(content, options.filteredContent, headingRange ?? undefined);
     const mappedCount = Math.min(taskLineIndices.length, checkboxes.length);
     for (let i = 0; i < checkboxes.length; i += 1) {
+        const checkbox = checkboxes[i];
+        if (!checkbox) {
+            continue;
+        }
         const mappedIndex = i < mappedCount ? taskLineIndices[i] : null;
         if (mappedIndex !== null && Number.isFinite(mappedIndex)) {
-            checkboxes[i].dataset.dailyNotesTimelineTaskLine = String(mappedIndex);
+            checkbox.dataset.dailyNotesTimelineTaskLine = String(mappedIndex);
         } else {
-            delete checkboxes[i].dataset.dailyNotesTimelineTaskLine;
+            delete checkbox.dataset.dailyNotesTimelineTaskLine;
         }
     }
 

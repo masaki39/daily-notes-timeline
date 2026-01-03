@@ -6,7 +6,10 @@ export function toISODateKey(date: Date): string {
 }
 
 export function getDateFromKey(key: string): Date {
-    const [year, month, day] = key.split('-').map(value => parseInt(value, 10));
+    const parts = key.split('-');
+    const year = Number.parseInt(parts[0] ?? '', 10);
+    const month = Number.parseInt(parts[1] ?? '', 10);
+    const day = Number.parseInt(parts[2] ?? '', 10);
     return new Date(year, month - 1, day);
 }
 
@@ -72,6 +75,10 @@ function tokenizeFormat(format: string): Array<{ type: 'literal' | 'token'; valu
     let i = 0;
     while (i < format.length) {
         const char = format[i];
+        if (!char) {
+            i += 1;
+            continue;
+        }
         if (char === '[') {
             const end = format.indexOf(']', i + 1);
             if (end === -1) {
@@ -158,9 +165,9 @@ export function extractDateFromFileName(fileName: string, format: string): Date 
     if (!match) {
         return null;
     }
-    const yearText = match[pattern.yearIndex];
-    const monthText = match[pattern.monthIndex];
-    const dayText = match[pattern.dayIndex];
+    const yearText = match[pattern.yearIndex] ?? '';
+    const monthText = match[pattern.monthIndex] ?? '';
+    const dayText = match[pattern.dayIndex] ?? '';
     if (!yearText || !monthText || !dayText) {
         return null;
     }

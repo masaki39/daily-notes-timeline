@@ -60,7 +60,8 @@ export async function refreshTimeline(
     if (preserveScroll && anchorKey) {
         const anchorIndex = ctx.findIndexByDateKey(anchorKey);
         let targetIndex = -1;
-        if (anchorIndex !== -1 && await ctx.hasFilteredContent(noteFiles[anchorIndex])) {
+        const anchorFile = anchorIndex !== -1 ? noteFiles[anchorIndex] : undefined;
+        if (anchorFile && await ctx.hasFilteredContent(anchorFile)) {
             targetIndex = anchorIndex;
         } else {
             targetIndex = await ctx.findNearestIndexWithContent(anchorKey);
