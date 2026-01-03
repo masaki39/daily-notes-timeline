@@ -39,4 +39,4 @@ Recommended: Install via [BRAT](https://github.com/TfTHacker/obsidian42-brat)
 Enable the plugin and run **Open daily notes timeline** from the command palette.
 
 > [!note]
-> This plugin inherits settings from the core plugin `Daily Notes`
+> This plugin inherits settings from the core plugin `Daily Notes`, thanks to the [Obsidian Daily Notes interface](https://github.com/liamcain/obsidian-daily-notes-interface).
