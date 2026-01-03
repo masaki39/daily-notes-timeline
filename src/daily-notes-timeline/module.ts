@@ -20,7 +20,7 @@ export class DailyNotesTimelineModule {
 
         this.plugin.addCommand({
             id: 'daily-notes-timeline-open',
-            name: 'Open Daily Notes Timeline',
+            name: 'Daily Notes Timeline: Open',
             callback: () => {
                 void this.activateView();
             }
@@ -43,7 +43,7 @@ export class DailyNotesTimelineModule {
             return;
         }
         await leaf.setViewState({ type: DAILY_NOTES_TIMELINE_VIEW, active: true });
-        workspace.revealLeaf(leaf);
+        await workspace.revealLeaf(leaf);
         if (isNewLeaf) {
             const view = leaf.view;
             if (view instanceof DailyNotesTimelineView) {

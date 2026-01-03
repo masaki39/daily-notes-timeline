@@ -40,8 +40,9 @@ function buildRandomContent(dateKey) {
     `> Random note for ${dateKey}.`
   ];
 
+  const imageSeed = `${dateKey}-${randomInt(1, 10000)}`;
   const images = [
-    `![img](attachments/${dateKey}.png)`
+    `![img](https://picsum.photos/seed/${imageSeed}/320/200)`
   ];
 
   return [

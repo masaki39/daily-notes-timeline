@@ -28,7 +28,7 @@ export class DailyNotesTimelineView extends ItemView {
     }
 
     getDisplayText(): string {
-        return 'Daily Notes Timeline';
+        return 'Daily notes timeline';
     }
 
     getIcon(): string {
@@ -75,9 +75,9 @@ export class DailyNotesTimelineView extends ItemView {
             return;
         }
         if (details && Object.keys(details).length > 0) {
-            console.log('[daily-notes-timeline]', message, details);
+            console.debug('[daily-notes-timeline]', message, details);
             return;
         }
-        console.log('[daily-notes-timeline]', message);
+        console.debug('[daily-notes-timeline]', message);
     }
 }

@@ -85,7 +85,7 @@ export class DailyNotesTimelineController {
                     }
                     return;
                 }
-                this.app.workspace.openLinkText(href, source, openInNewLeaf);
+                void this.app.workspace.openLinkText(href, source, openInNewLeaf);
             },
             onToggleTask: async (targetFile, lineIndex, checked) => {
                 await this.updateTaskLine(targetFile, lineIndex, checked);
@@ -473,7 +473,7 @@ export class DailyNotesTimelineController {
             const format = settings?.format?.trim() || DEFAULT_DAILY_NOTE_FORMAT;
             this.dailyNotesConfig = { folder, format };
             return this.dailyNotesConfig;
-        } catch (error) {
+        } catch {
             this.dailyNotesConfig = null;
             return null;
         }

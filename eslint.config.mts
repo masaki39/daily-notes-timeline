@@ -13,7 +13,10 @@ export default tseslint.config(
 				projectService: {
 					allowDefaultProject: [
 						'eslint.config.js',
-						'manifest.json'
+						'manifest.json',
+						'__mocks__/*.ts',
+						'tests/*.ts',
+						'scripts/*.mjs'
 					]
 				},
 				tsconfigRootDir: import.meta.dirname,
@@ -22,6 +25,67 @@ export default tseslint.config(
 		},
 	},
 	...obsidianmd.configs.recommended,
+	{
+		files: ['src/daily-notes-timeline/**/*.ts'],
+		rules: {
+			'@typescript-eslint/no-explicit-any': 'off',
+			'@typescript-eslint/no-unsafe-assignment': 'off',
+			'@typescript-eslint/no-unsafe-member-access': 'off',
+			'@typescript-eslint/no-unsafe-call': 'off',
+			'@typescript-eslint/no-unsafe-argument': 'off',
+			'@typescript-eslint/no-redundant-type-constituents': 'off',
+			'@typescript-eslint/no-unnecessary-type-assertion': 'off'
+		},
+	},
+	{
+		files: ['src/daily-notes-timeline/module.ts'],
+		rules: {
+			'obsidianmd/commands/no-plugin-id-in-command-id': 'off',
+			'obsidianmd/commands/no-plugin-name-in-command-name': 'off',
+			'obsidianmd/ui/sentence-case': 'off'
+		},
+	},
+	{
+		files: ['scripts/**/*.mjs'],
+		languageOptions: {
+			globals: {
+				...globals.node,
+			},
+		},
+	},
+	{
+		files: ['__mocks__/*.ts'],
+		languageOptions: {
+			globals: {
+				...globals.node,
+			},
+		},
+		rules: {
+			'@typescript-eslint/no-explicit-any': 'off',
+			'@typescript-eslint/no-unsafe-assignment': 'off',
+			'@typescript-eslint/no-unsafe-member-access': 'off',
+			'@typescript-eslint/no-unsafe-call': 'off',
+			'@typescript-eslint/no-unsafe-argument': 'off',
+		},
+	},
+	{
+		files: ['tests/*.ts'],
+		languageOptions: {
+			globals: {
+				...globals.node,
+				...globals.jest,
+			},
+		},
+		rules: {
+			'@typescript-eslint/no-explicit-any': 'off',
+			'@typescript-eslint/no-unsafe-assignment': 'off',
+			'@typescript-eslint/no-unsafe-member-access': 'off',
+			'@typescript-eslint/no-unsafe-call': 'off',
+			'@typescript-eslint/no-unsafe-argument': 'off',
+			'@typescript-eslint/no-unsafe-return': 'off',
+			'no-undef': 'off',
+		},
+	},
 	globalIgnores([
 		"node_modules",
 		"dist",

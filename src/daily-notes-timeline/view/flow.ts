@@ -1,5 +1,4 @@
 import { TFile } from 'obsidian';
-import { toISODateKey } from '../data';
 
 export type TimelineFlowContext = {
     getListEl: () => HTMLDivElement | null;

@@ -43,7 +43,7 @@ export class TimelineCalendar {
         this.calendarTitleEl = calendarHeader.createDiv('daily-notes-timeline-calendar-title');
         const calendarNav = calendarHeader.createDiv('daily-notes-timeline-calendar-nav');
         const prevButton = calendarNav.createEl('button', { text: '<', cls: 'daily-notes-timeline-calendar-nav-button' });
-        const todayButton = calendarNav.createEl('button', { text: 'today', cls: 'daily-notes-timeline-calendar-nav-button' });
+        const todayButton = calendarNav.createEl('button', { text: 'Today', cls: 'daily-notes-timeline-calendar-nav-button' });
         const nextButton = calendarNav.createEl('button', { text: '>', cls: 'daily-notes-timeline-calendar-nav-button' });
         this.registerDomEvent(prevButton, 'click', () => this.shiftCalendarMonth(-1));
         this.registerDomEvent(todayButton, 'click', () => this.scrollToToday());
