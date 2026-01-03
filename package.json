@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "daily-notes-timeline",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Timeline view for Obsidian daily notes.",
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
@@ -10,20 +10,26 @@
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"lint": "eslint ."
 	},
-	"keywords": [],
-	"license": "0-BSD",
+	"keywords": [
+		"obsidian",
+		"plugin",
+		"daily-notes",
+		"timeline"
+	],
+	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^16.11.6",
+		"@eslint/js": "9.30.1",
 		"esbuild": "0.25.5",
 		"eslint-plugin-obsidianmd": "0.1.9",
 		"globals": "14.0.0",
+		"jiti": "2.6.1",
 		"tslib": "2.4.0",
 		"typescript": "^5.8.3",
-		"typescript-eslint": "8.35.1",
-		"@eslint/js": "9.30.1",
-		"jiti": "2.6.1"
+		"typescript-eslint": "8.35.1"
 	},
 	"dependencies": {
-		"obsidian": "latest"
+		"obsidian": "latest",
+		"obsidian-daily-notes-interface": "^0.9.4"
 	}
 }

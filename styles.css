@@ -1,8 +1,240 @@
-/*
+/* Daily Note Timeline view styles */
+.daily-notes-timeline-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.daily-notes-timeline-header {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--background-modifier-border);
+    gap: 8px;
+    width: 100%;
+    max-width: var(--file-line-width);
+    margin-inline: auto;
+}
 
-If your plugin does not need CSS, delete this file.
+.daily-notes-timeline-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
 
-*/
+.daily-notes-timeline-header-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.daily-notes-timeline-filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.daily-notes-timeline-filter-tab {
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 999px;
+    padding: 4px 10px;
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.daily-notes-timeline-filter-tab.is-active {
+    background-color: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border-color: transparent;
+}
+
+.daily-notes-timeline-filter-heading {
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--background-modifier-border);
+    background-color: var(--background-primary);
+    width: 180px;
+}
+
+.daily-notes-timeline-search {
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--background-modifier-border);
+    background-color: var(--background-primary);
+    flex: 1;
+    min-width: 200px;
+}
+
+.daily-notes-timeline-filter-heading.is-hidden {
+    display: none;
+}
+
+.daily-notes-timeline-scroll {
+    overflow: auto;
+    height: 100%;
+    padding: 8px;
+}
+
+.daily-notes-timeline-calendar-open .daily-notes-timeline-scroll {
+    padding-bottom: 240px;
+}
+
+.daily-notes-timeline-list {
+    display: flex;
+    flex-direction: column;
+    max-width: var(--file-line-width);
+    gap: 16px;
+    position: relative;
+    margin-inline: auto;
+}
+
+
+.daily-notes-timeline-item {
+    position: relative;
+    z-index: 1;
+    padding: 10px 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 10px;
+    background: var(--background-primary);
+}
+
+.daily-notes-timeline-item::before {
+    content: none;
+}
+
+.daily-notes-timeline-item-title {
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text-accent);
+}
+
+.daily-notes-timeline-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.daily-notes-timeline-item-title:hover {
+    text-decoration: underline;
+}
+
+.daily-notes-timeline-calendar-toggle {
+    position: absolute;
+    right: 24px;
+    bottom: 32px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    z-index: 5;
+}
+
+.daily-notes-timeline-calendar {
+    position: absolute;
+    right: 21px;
+    left: auto;
+    bottom: 24px;
+    height: 280px;
+    width: calc(100% - 42px);
+    max-width: 280px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--background-modifier-border);
+    background: var(--background-primary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 4;
+}
+
+.daily-notes-timeline-calendar.is-hidden {
+    display: none;
+}
+
+.daily-notes-timeline-calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.daily-notes-timeline-calendar-nav {
+    display: flex;
+    gap: 6px;
+}
+
+.daily-notes-timeline-calendar-nav-button {
+    padding: 2px 8px;
+}
+
+.daily-notes-timeline-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-auto-rows: 26px;
+    gap: 6px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.daily-notes-timeline-calendar-weekday {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.daily-notes-timeline-calendar-weekday.is-sun {
+    color: var(--text-error);
+}
+
+.daily-notes-timeline-calendar-weekday.is-sat {
+    color: var(--color-blue);
+}
+
+.daily-notes-timeline-today {
+    padding: 4px 10px;
+}
+
+.daily-notes-timeline-calendar-empty {
+    height: 26px;
+}
+
+.daily-notes-timeline-calendar-day {
+    height: 28px;
+    line-height: 28px;
+    border-radius: 6px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.daily-notes-timeline-calendar-day:hover {
+    background: var(--background-modifier-hover);
+}
+
+.daily-notes-timeline-calendar-day.is-active {
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    font-weight: 600;
+}
+
+.daily-notes-timeline-item-body > :first-child {
+    margin-top: 0;
+}
+
+.daily-notes-timeline-item-body {
+    user-select: text;
+}
+
+.daily-notes-timeline-empty {
+    padding: 12px;
+    color: var(--text-muted);
+}
+
+.daily-notes-timeline-highlight {
+    background: var(--text-highlight-bg);
+    color: var(--text-highlight-fg, inherit);
+    padding: 0 2px;
+    border-radius: 3px;
+}
+/* End Daily Note Timeline view styles */
