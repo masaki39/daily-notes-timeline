@@ -1,11 +1,11 @@
 {
 	"id": "daily-notes-timeline",
-	"name": "daily-notes-timeline",
-	"version": "1.0.0",
+	"name": "Daily Notes Timeline",
+	"version": "0.0.1",
 	"minAppVersion": "0.15.0",
 	"description": "Timeline view for daily notes.",
 	"author": "masaki39",
-	"authorUrl": "",
-	"fundingUrl": "",
+	"authorUrl": "https://github.com/masaki39",
+	"fundingUrl": "https://ko-fi.com/masaki39",
 	"isDesktopOnly": false
 }
