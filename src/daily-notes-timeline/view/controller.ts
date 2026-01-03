@@ -1,6 +1,6 @@
 import { App, TFile } from 'obsidian';
 import { DailyNotesTimelineSettings } from '../../settings';
-import { DailyNotesConfig, getDateKeyFromFile, toISODateKey } from '../data';
+import { DailyNotesConfig, getDateKeyFromFile, isDailyNotePath, toISODateKey } from '../data';
 import { TimelineFilterMode } from '../filters';
 import { TimelineFlowContext, jumpToDateKey, refreshTimeline, scrollToToday } from './flow';
 import { TimelineControllerUi } from './controller-ui';
@@ -67,7 +67,6 @@ export class DailyNotesTimelineController {
         this.noteFilesCache = new TimelineNoteFilesCache({
             app: options.app,
             getConfig: () => this.getDailyNotesConfig(),
-            isInDailyNotesFolder: (path, folder) => this.isInDailyNotesFolder(path, folder),
             getDateKeyFromFile: (file) => this.getDateKeyFromFile(file)
         });
         this.renderManager = new TimelineRenderManager({
@@ -487,14 +486,6 @@ export class DailyNotesTimelineController {
         return trimmed.replace(/^\/+|\/+$/g, '');
     }
 
-    private isInDailyNotesFolder(filePath: string, folder: string): boolean {
-        const normalized = this.normalizeFolderPath(folder);
-        if (normalized.length === 0) {
-            return !filePath.includes('/');
-        }
-        return filePath.startsWith(`${normalized}/`);
-    }
-
     private invalidateDateKeyCache(path?: string) {
         if (!path) {
             this.dateKeyCache.clear();
@@ -511,7 +502,7 @@ export class DailyNotesTimelineController {
         if (!config) {
             return;
         }
-        if (!this.isInDailyNotesFolder(file.path, config.folder)) {
+        if (!isDailyNotePath(file.path, config)) {
             return;
         }
         if (file.extension !== 'md') {
@@ -533,7 +524,7 @@ export class DailyNotesTimelineController {
         if (!config) {
             return;
         }
-        if (!this.isInDailyNotesFolder(file.path, config.folder)) {
+        if (!isDailyNotePath(file.path, config)) {
             return;
         }
         if (file.extension !== 'md') {
@@ -556,7 +547,7 @@ export class DailyNotesTimelineController {
         if (!config) {
             return;
         }
-        if (!this.isInDailyNotesFolder(file.path, config.folder)) {
+        if (!isDailyNotePath(file.path, config)) {
             return;
         }
         if (file.extension !== 'md') {
@@ -579,8 +570,8 @@ export class DailyNotesTimelineController {
         if (!config) {
             return;
         }
-        const wasInFolder = oldPath ? this.isInDailyNotesFolder(oldPath, config.folder) : false;
-        const isInFolder = this.isInDailyNotesFolder(file.path, config.folder);
+        const wasInFolder = oldPath ? isDailyNotePath(oldPath, config) : false;
+        const isInFolder = isDailyNotePath(file.path, config);
         if (!wasInFolder && !isInFolder) {
             return;
         }

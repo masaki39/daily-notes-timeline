@@ -6,9 +6,12 @@ export type DailyNotesConfig = {
     format: string;
 };
 
-export function getDateKeyFromFile(file: TFile, config: DailyNotesConfig): string | null {
-    const date = extractDateFromFileName(file.basename, config.format);
-    return date ? toISODateKey(date) : null;
+function stripExtension(path: string, extension: string): string | null {
+    const suffix = `.${extension}`;
+    if (!path.endsWith(suffix)) {
+        return null;
+    }
+    return path.slice(0, -suffix.length);
 }
 
 function normalizeFolderPath(folder: string): string {
@@ -19,23 +22,54 @@ function normalizeFolderPath(folder: string): string {
     return trimmed.replace(/^\/+|\/+$/g, '');
 }
 
-export function collectDailyNoteFiles(app: App, config: DailyNotesConfig): TFile[] {
+function getPathForFormat(filePath: string, config: DailyNotesConfig): string | null {
+    const withoutExtension = stripExtension(filePath, 'md');
+    if (!withoutExtension) {
+        return null;
+    }
     const folder = normalizeFolderPath(config.folder);
-    const files = app.vault.getFiles().filter(file => {
-        if (file.extension !== 'md') {
-            return false;
-        }
-        if (folder.trim().length === 0) {
-            return !file.path.includes('/');
-        }
-        return file.path.startsWith(`${folder}/`);
-    });
+    if (!folder) {
+        return withoutExtension;
+    }
+    const prefix = `${folder}/`;
+    if (!withoutExtension.startsWith(prefix)) {
+        return null;
+    }
+    return withoutExtension.slice(prefix.length);
+}
+
+export function isDailyNotePath(filePath: string, config: DailyNotesConfig): boolean {
+    const pathForFormat = getPathForFormat(filePath, config);
+    if (!pathForFormat) {
+        return false;
+    }
+    return extractDateFromFileName(pathForFormat, config.format) !== null;
+}
+
+export function getDateKeyFromFile(file: TFile, config: DailyNotesConfig): string | null {
+    const pathForFormat = getPathForFormat(file.path, config);
+    if (!pathForFormat) {
+        return null;
+    }
+    const date = extractDateFromFileName(pathForFormat, config.format);
+    return date ? toISODateKey(date) : null;
+}
+
+export function collectDailyNoteFiles(app: App, config: DailyNotesConfig): TFile[] {
+    const files = app.vault.getFiles().filter(file => file.extension === 'md');
     const withDates = files
-        .map(file => ({
-            file,
-            date: extractDateFromFileName(file.basename, config.format)
-        }))
-        .filter(entry => entry.date !== null) as Array<{ file: TFile; date: Date }>;
+        .map(file => {
+            const pathForFormat = getPathForFormat(file.path, config);
+            if (!pathForFormat) {
+                return null;
+            }
+            const date = extractDateFromFileName(pathForFormat, config.format);
+            if (!date) {
+                return null;
+            }
+            return { file, date };
+        })
+        .filter(entry => entry !== null) as Array<{ file: TFile; date: Date }>;
 
     withDates.sort((a, b) => b.date.getTime() - a.date.getTime());
     return withDates.map(entry => entry.file);

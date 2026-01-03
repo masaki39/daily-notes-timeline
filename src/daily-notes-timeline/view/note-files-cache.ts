@@ -5,14 +5,12 @@ import { dateKeyToNumber } from './timeline-index';
 type NoteFilesCacheOptions = {
     app: App;
     getConfig: () => DailyNotesConfig | null;
-    isInDailyNotesFolder: (path: string, folder: string) => boolean;
     getDateKeyFromFile: (file: TFile) => string | null;
 };
 
 export class TimelineNoteFilesCache {
     private app: App;
     private getConfig: () => DailyNotesConfig | null;
-    private isInDailyNotesFolder: (path: string, folder: string) => boolean;
     private getDateKeyFromFile: (file: TFile) => string | null;
     private cache: TFile[] | null = null;
     private cacheKey: string | null = null;
@@ -20,7 +18,6 @@ export class TimelineNoteFilesCache {
     constructor(options: NoteFilesCacheOptions) {
         this.app = options.app;
         this.getConfig = options.getConfig;
-        this.isInDailyNotesFolder = options.isInDailyNotesFolder;
         this.getDateKeyFromFile = options.getDateKeyFromFile;
     }
 
@@ -56,9 +53,6 @@ export class TimelineNoteFilesCache {
         const cacheKey = `${config.folder}::${config.format}`;
         if (this.cacheKey !== cacheKey) {
             this.invalidate();
-            return false;
-        }
-        if (!this.isInDailyNotesFolder(file.path, config.folder)) {
             return false;
         }
         if (file.extension !== 'md') {

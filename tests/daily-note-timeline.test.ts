@@ -228,6 +228,23 @@ describe('daily note timeline file collection', () => {
             '2024-01-01.md'
         ]);
     });
+
+    test('collectDailyNoteFiles supports format with nested folders', () => {
+        const app = createAppWithFiles([
+            '2024/02/2024-02-03.md',
+            '2024/02/2024-02-01.md',
+            '2024/01/2024-01-31.md',
+            '2024/02/notes.md',
+            'Daily/2024/02/2024-02-02.md',
+            '2024-02-05.md'
+        ]);
+        const files = collectDailyNoteFiles(app, { folder: '', format: 'YYYY/MM/YYYY-MM-DD' });
+        expect(files.map(file => file.path)).toEqual([
+            '2024/02/2024-02-03.md',
+            '2024/02/2024-02-01.md',
+            '2024/01/2024-01-31.md'
+        ]);
+    });
 });
 
 describe('daily note timeline index', () => {
