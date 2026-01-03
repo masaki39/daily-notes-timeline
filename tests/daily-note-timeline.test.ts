@@ -103,6 +103,7 @@ describe('daily note timeline filters', () => {
             'plain text',
             '[[Internal Link]]',
             'See [title](https://example.com)',
+            '![image](https://picsum.photos/seed/demo/320/200)',
             'https://example.com direct'
         ].join('\n');
         expect(filterLinksContent(input)).toBe('[[Internal Link]]\nSee [title](https://example.com)\nhttps://example.com direct');
@@ -113,9 +114,10 @@ describe('daily note timeline filters', () => {
             'text',
             '![[photo.jpg]]',
             '![alt](image.png)',
+            '![alt](https://picsum.photos/seed/demo/320/200)',
             '<img src="photo.webp" />'
         ].join('\n');
-        expect(filterImagesContent(input)).toBe('![[photo.jpg]]\n![alt](image.png)\n<img src="photo.webp" />');
+        expect(filterImagesContent(input)).toBe('![[photo.jpg]]\n![alt](image.png)\n![alt](https://picsum.photos/seed/demo/320/200)\n<img src="photo.webp" />');
     });
 
     test('filterCalloutsContent extracts callout blocks', () => {
