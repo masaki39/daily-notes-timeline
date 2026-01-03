@@ -20,7 +20,7 @@ export class DailyNotesTimelineModule {
 
         this.plugin.addCommand({
             id: 'daily-notes-timeline-open',
-            name: 'Open Daily Notes Timeline',
+            name: 'Open daily notes timeline',
             callback: () => {
                 void this.activateView();
             }
