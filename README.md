@@ -36,7 +36,7 @@ Filter by any search term and display with highlights.
 
 Recommended: Install via [BRAT](https://github.com/TfTHacker/obsidian42-brat) 
 
-Enable the plugin and run **Open Daily Notes Timeline** from the command palette.
+Enable the plugin and run **Open daily notes timeline** from the command palette.
 
 > [!note]
 > This plugin inherits settings from the core plugin `Daily Notes`
