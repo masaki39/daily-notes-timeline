@@ -6,20 +6,34 @@ type HeaderOptions = {
     activeFilter: TimelineFilterMode;
     headingFilterText: string;
     searchQuery: string;
+    isHeaderCollapsed: boolean;
     onFilterChange: (mode: TimelineFilterMode) => void;
     onHeadingInput: (value: string) => void;
     onSearchInput: (value: string) => void;
     onToday: () => void;
+    onHeaderToggle: () => void;
 };
 
 export type HeaderElements = {
     filterTabButtons: HTMLButtonElement[];
     filterHeadingInputEl: HTMLInputElement;
     searchInputEl: HTMLInputElement;
+    headerEl: HTMLElement;
+    headerToggleButton: HTMLButtonElement;
 };
 
 export function buildTimelineHeader(options: HeaderOptions): HeaderElements {
     const headerEl = options.contentEl.createDiv('daily-notes-timeline-header');
+    if (options.isHeaderCollapsed) {
+        headerEl.addClass('is-collapsed');
+    }
+
+    const headerToggleButton = headerEl.createEl('button', {
+        text: options.isHeaderCollapsed ? 'v' : '^',
+        cls: 'daily-notes-timeline-header-toggle'
+    });
+    options.registerDomEvent(headerToggleButton, 'click', () => options.onHeaderToggle());
+
     const headerControls = headerEl.createDiv('daily-notes-timeline-controls');
     const headerTopRow = headerControls.createDiv('daily-notes-timeline-header-row');
     const headerBottomRow = headerControls.createDiv('daily-notes-timeline-header-row');
@@ -73,5 +87,5 @@ export function buildTimelineHeader(options: HeaderOptions): HeaderElements {
 
     options.registerDomEvent(headerTodayButton, 'click', () => options.onToday());
 
-    return { filterTabButtons, filterHeadingInputEl, searchInputEl };
+    return { filterTabButtons, filterHeadingInputEl, searchInputEl, headerEl, headerToggleButton };
 }

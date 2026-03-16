@@ -30,6 +30,9 @@ export class TimelineControllerUi {
     private filterTabButtons: HTMLButtonElement[] = [];
     private filterHeadingInputEl: HTMLInputElement | null = null;
     private calendar: TimelineCalendar | null = null;
+    private isHeaderCollapsed: boolean = false;
+    private headerEl: HTMLElement | null = null;
+    private headerToggleButton: HTMLButtonElement | null = null;
 
     constructor(options: TimelineControllerUiOptions) {
         this.contentEl = options.contentEl;
@@ -51,14 +54,29 @@ export class TimelineControllerUi {
             activeFilter,
             headingFilterText,
             searchQuery,
+            isHeaderCollapsed: this.isHeaderCollapsed,
             onFilterChange: this.onFilterChange,
             onHeadingInput: this.onHeadingInput,
             onSearchInput: this.onSearchInput,
-            onToday: this.onToday
+            onToday: this.onToday,
+            onHeaderToggle: () => this.toggleHeader()
         });
         this.filterTabButtons = elements.filterTabButtons;
         this.filterHeadingInputEl = elements.filterHeadingInputEl;
+        this.headerEl = elements.headerEl;
+        this.headerToggleButton = elements.headerToggleButton;
         this.updateFilterUi(activeFilter);
+    }
+
+    private toggleHeader() {
+        this.isHeaderCollapsed = !this.isHeaderCollapsed;
+        this.updateHeaderCollapseUi();
+    }
+
+    private updateHeaderCollapseUi() {
+        if (!this.headerEl || !this.headerToggleButton) return;
+        this.headerEl.toggleClass('is-collapsed', this.isHeaderCollapsed);
+        this.headerToggleButton.textContent = this.isHeaderCollapsed ? 'v' : '^';
     }
 
     buildCalendar() {
