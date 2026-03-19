@@ -4,10 +4,12 @@ export interface DailyNotesTimelineSettings {
 	dailyNoteTimelineFilterHeadingDefault: string;
 	dailyNoteTimelineDefaultFilter: TimelineFilterMode;
 	dailyNoteTimelineCalendarDefaultOpen: boolean;
+	dailyNoteTimelineHeaderCollapsed: boolean;
 }
 
 export const DEFAULT_SETTINGS: DailyNotesTimelineSettings = {
 	dailyNoteTimelineFilterHeadingDefault: '',
 	dailyNoteTimelineDefaultFilter: 'all',
-	dailyNoteTimelineCalendarDefaultOpen: false
+	dailyNoteTimelineCalendarDefaultOpen: false,
+	dailyNoteTimelineHeaderCollapsed: false
 };

@@ -45,6 +45,7 @@ export class TimelineControllerUi {
         this.onScrollToToday = options.onScrollToToday;
         this.onJumpToDateKey = options.onJumpToDateKey;
         this.onQueueSettingsSave = options.onQueueSettingsSave;
+        this.isHeaderCollapsed = options.settings.dailyNoteTimelineHeaderCollapsed;
     }
 
     buildHeader(activeFilter: TimelineFilterMode, headingFilterText: string, searchQuery: string) {
@@ -70,6 +71,8 @@ export class TimelineControllerUi {
 
     private toggleHeader() {
         this.isHeaderCollapsed = !this.isHeaderCollapsed;
+        this.settings.dailyNoteTimelineHeaderCollapsed = this.isHeaderCollapsed;
+        this.onQueueSettingsSave();
         this.updateHeaderCollapseUi();
     }
 
