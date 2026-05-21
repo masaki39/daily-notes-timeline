@@ -10,25 +10,45 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      attestations: write
+      id-token: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
 
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "18.x"
+          cache: "pnpm"
 
       - name: Build plugin
         run: |
-          npm install
-          npm run build
+          pnpm install
+          pnpm build
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            main.js
+            styles.css
 
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tag="${GITHUB_REF#refs/tags/}"
+          changelog="changelog/${tag}.md"
 
-          gh release create "$tag" \
-            --title="$tag" \
-            main.js manifest.json styles.css
+          if [ -f "$changelog" ]; then
+            gh release create "$tag" \
+              --title="$tag" \
+              --notes-file="$changelog" \
+              main.js manifest.json styles.css
+          else
+            gh release create "$tag" \
+              --title="$tag" \
+              --notes="" \
+              main.js manifest.json styles.css
+          fi
