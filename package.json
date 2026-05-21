@@ -1,6 +1,6 @@
 {
 	"name": "daily-notes-timeline",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"description": "Timeline view for Obsidian daily notes.",
 	"main": "main.js",
 	"type": "module",
@@ -20,7 +20,9 @@
 	"packageManager": "pnpm@10.32.1",
 	"license": "MIT",
 	"pnpm": {
-		"onlyBuiltDependencies": ["esbuild"]
+		"onlyBuiltDependencies": [
+			"esbuild"
+		]
 	},
 	"devDependencies": {
 		"@types/jest": "^30.0.0",
