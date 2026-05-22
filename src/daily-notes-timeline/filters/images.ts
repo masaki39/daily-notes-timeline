@@ -1,4 +1,4 @@
-const IMAGE_EMBED_REGEX = /!\[\[[^\]]+\.(?:png|jpe?g|gif|webp|bmp|svg)\]\]/i;
+const IMAGE_EMBED_REGEX = /!\[\[[^\]]+\.(?:png|jpe?g|gif|webp|bmp|svg)(?:\|[^\]]*)?\]\]/i;
 const IMAGE_LINK_REGEX = /!\[[^\]]*]\((?:https?:\/\/[^)\s]+|[^)\s]+\.(?:png|jpe?g|gif|webp|bmp|svg))(?:\?[^)]*)?\)/i;
 const IMAGE_HTML_REGEX = /<img\s[^>]*>/i;
 const IMAGE_LINE_REGEX = new RegExp(

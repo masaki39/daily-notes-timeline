@@ -252,6 +252,11 @@
     user-select: text;
 }
 
+.daily-notes-timeline-item-body img {
+    max-width: 100%;
+    height: auto;
+}
+
 .daily-notes-timeline-empty {
     padding: 12px;
     color: var(--text-muted);

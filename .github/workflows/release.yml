@@ -49,6 +49,6 @@ jobs:
           else
             gh release create "$tag" \
               --title="$tag" \
-              --notes="" \
+              --generate-notes \
               main.js manifest.json styles.css
           fi
