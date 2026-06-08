@@ -1,7 +1,7 @@
 {
 	"id": "daily-notes-timeline-view",
 	"name": "Daily Notes Timeline View",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"minAppVersion": "1.7.2",
 	"description": "Timeline view for daily notes.",
 	"author": "masaki39",
