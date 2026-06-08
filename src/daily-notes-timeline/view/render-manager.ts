@@ -186,11 +186,16 @@ export class TimelineRenderManager {
             this.touchCache(this.filteredContentCache, file.path, cached, this.maxFilteredCacheEntries);
             return this.applySearch(cached);
         }
-        const content = await this.app.vault.cachedRead(file);
+        const content = await this.readNormalizedContent(file);
         this.touchCache(this.fileContentCache, file.path, content, this.maxRawCacheEntries);
         const filtered = this.applyFilter(content);
         this.touchCache(this.filteredContentCache, file.path, filtered, this.maxFilteredCacheEntries);
         return this.applySearch(filtered);
+    }
+
+    private async readNormalizedContent(file: TFile): Promise<string> {
+        const raw = await this.app.vault.cachedRead(file);
+        return raw.replace(/\r\n/g, '\n');
     }
 
     private async getRawContent(file: TFile): Promise<string> {
@@ -199,7 +204,7 @@ export class TimelineRenderManager {
             this.touchCache(this.fileContentCache, file.path, cached, this.maxRawCacheEntries);
             return cached;
         }
-        const content = await this.app.vault.cachedRead(file);
+        const content = await this.readNormalizedContent(file);
         this.touchCache(this.fileContentCache, file.path, content, this.maxRawCacheEntries);
         return content;
     }
