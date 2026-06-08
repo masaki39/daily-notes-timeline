@@ -147,7 +147,7 @@ export class TimelineRenderManager {
         if (filtered === null) {
             return false;
         }
-        const bodyEl = noteEl.querySelector('.daily-notes-timeline-item-body') as HTMLDivElement | null;
+        const bodyEl = noteEl.querySelector<HTMLDivElement>('.daily-notes-timeline-item-body');
         if (!bodyEl) {
             return false;
         }
@@ -217,9 +217,9 @@ export class TimelineRenderManager {
         if (cache.size <= maxEntries) {
             return;
         }
-        const oldestKey = cache.keys().next().value;
-        if (oldestKey !== undefined) {
-            cache.delete(oldestKey);
+        const oldest = cache.keys().next();
+        if (!oldest.done) {
+            cache.delete(oldest.value);
         }
     }
 

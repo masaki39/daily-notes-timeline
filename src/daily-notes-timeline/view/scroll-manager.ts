@@ -212,7 +212,7 @@ export class TimelineScrollManager {
             return;
         }
         const selector = `[data-index="${targetIndex}"]`;
-        const targetEl = this.listEl.querySelector(selector) as HTMLElement | null
+        const targetEl = this.listEl.querySelector<HTMLElement>(selector)
             ?? this.listEl.children[targetIndex - this.getStartIndex()] as HTMLElement | undefined;
         if (!targetEl) {
             return;
@@ -232,7 +232,7 @@ export class TimelineScrollManager {
         if (!this.scrollerEl || !this.listEl) {
             return;
         }
-        const targetEl = this.listEl.querySelector(`[data-date="${dateKey}"]`) as HTMLElement | null;
+        const targetEl = this.listEl.querySelector<HTMLElement>(`[data-date="${dateKey}"]`);
         if (!targetEl) {
             return;
         }
