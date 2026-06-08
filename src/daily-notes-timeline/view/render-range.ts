@@ -38,7 +38,7 @@ type RenderNoteContentOptions = {
     activeFilter: TimelineFilterMode;
     headingFilterText: string;
     searchQuery: string;
-    markdownComponent: any;
+    markdownComponent: Component & { app: App };
     resolveLinkSourcePath: (file: TFile) => string;
     filteredContent: string;
     rawContent?: string;

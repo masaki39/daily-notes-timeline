@@ -66,7 +66,7 @@ export class TimelineScrollManager {
     buildScroller() {
         this.scrollerEl = this.contentEl.createDiv('daily-notes-timeline-scroll');
         this.listEl = this.scrollerEl.createDiv('daily-notes-timeline-list');
-        this.registerDomEvent(this.scrollerEl, 'scroll', () => this.onScroll());
+        this.registerDomEvent(this.scrollerEl, 'scroll', () => { void this.onScroll(); });
     }
 
     getScrollerEl(): HTMLDivElement | null {
@@ -213,7 +213,7 @@ export class TimelineScrollManager {
         }
         const selector = `[data-index="${targetIndex}"]`;
         const targetEl = this.listEl.querySelector(selector) as HTMLElement | null
-            ?? (this.listEl.children[targetIndex - this.getStartIndex()] as HTMLElement | undefined);
+            ?? this.listEl.children[targetIndex - this.getStartIndex()] as HTMLElement | undefined;
         if (!targetEl) {
             return;
         }

@@ -19,7 +19,7 @@ type TimelineControllerUiOptions = {
 export class TimelineControllerUi {
     private contentEl: HTMLElement;
     private settings: DailyNotesTimelineSettings;
-    private registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    private registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     private onFilterChange: (mode: TimelineFilterMode) => void;
     private onHeadingInput: (value: string) => void;
     private onSearchInput: (value: string) => void;

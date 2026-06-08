@@ -24,10 +24,10 @@ type ControllerOptions = {
 export class DailyNotesTimelineController {
     private app: App;
     private contentEl: HTMLElement;
-    private registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    private registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     private settings: DailyNotesTimelineSettings;
     private onSettingsChange: (() => Promise<void>) | null = null;
-    private markdownComponent: any;
+    private markdownComponent: Component & { app: App };
     private isLeafDeferred: (() => boolean) | null = null;
     private ui: TimelineControllerUi;
     private noteFiles: TFile[] = [];

@@ -107,7 +107,7 @@ export async function attachTaskToggleHandler(options: TaskToggleOptions): Promi
         return;
     }
     options.container.dataset.dailyNotesTimelineTaskHandlerAttached = '1';
-    options.registerDomEvent(options.container, 'change', async (event: Event) => {
+    options.registerDomEvent(options.container, 'change', (event: Event) => {
         const target = event.target as HTMLInputElement | null;
         if (!target || target.type !== 'checkbox') {
             return;
@@ -117,6 +117,6 @@ export async function attachTaskToggleHandler(options: TaskToggleOptions): Promi
         if (!Number.isFinite(lineIndex)) {
             return;
         }
-        await options.onToggleTask(options.file, lineIndex, target.checked);
+        void options.onToggleTask(options.file, lineIndex, target.checked);
     });
 }

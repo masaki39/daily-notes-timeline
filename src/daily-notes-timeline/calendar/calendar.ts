@@ -14,7 +14,7 @@ type CalendarOptions = {
 export class TimelineCalendar {
     private contentEl: HTMLElement;
     private settings: DailyNotesTimelineSettings;
-    private registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    private registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     private onScrollToToday: () => void;
     private onJumpToDateKey: (dateKey: string) => void;
     private onQueueSettingsSave: () => void;

@@ -12,19 +12,19 @@ export type NoteElements = {
 };
 
 export function createNoteElements(options: NoteElementOptions): NoteElements {
-    const noteEl = activeDocument.createElement('div') as HTMLDivElement;
+    const noteEl = activeDocument.createElement('div');
     noteEl.className = 'daily-notes-timeline-item';
     noteEl.dataset.path = options.file.path;
 
-    const titleRowEl = activeDocument.createElement('div') as HTMLDivElement;
+    const titleRowEl = activeDocument.createElement('div');
     titleRowEl.className = 'daily-notes-timeline-item-header';
 
-    const titleEl = activeDocument.createElement('a') as HTMLAnchorElement;
+    const titleEl = activeDocument.createElement('a');
     titleEl.className = 'daily-notes-timeline-item-title';
     titleEl.textContent = options.file.basename;
     titleEl.href = options.file.path;
     titleEl.setAttribute('data-href', options.file.path);
-    options.registerDomEvent(titleEl, 'click', async (event: MouseEvent) => {
+    options.registerDomEvent(titleEl, 'click', (event: MouseEvent) => {
         event.preventDefault();
         const openInNewLeaf = event.metaKey || event.ctrlKey;
         options.onOpenFile(options.file, openInNewLeaf);
@@ -32,7 +32,7 @@ export function createNoteElements(options: NoteElementOptions): NoteElements {
 
     titleRowEl.appendChild(titleEl);
 
-    const bodyEl = activeDocument.createElement('div') as HTMLDivElement;
+    const bodyEl = activeDocument.createElement('div');
     bodyEl.className = 'daily-notes-timeline-item-body';
 
     noteEl.appendChild(titleRowEl);
