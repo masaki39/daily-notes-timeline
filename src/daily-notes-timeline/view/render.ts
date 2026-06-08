@@ -2,7 +2,7 @@ import { TFile } from 'obsidian';
 
 type NoteElementOptions = {
     file: TFile;
-    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     onOpenFile: (file: TFile, openInNewLeaf: boolean) => void;
 };
 
@@ -12,14 +12,14 @@ export type NoteElements = {
 };
 
 export function createNoteElements(options: NoteElementOptions): NoteElements {
-    const noteEl = document.createElement('div');
+    const noteEl = activeDocument.createElement('div') as HTMLDivElement;
     noteEl.className = 'daily-notes-timeline-item';
     noteEl.dataset.path = options.file.path;
 
-    const titleRowEl = document.createElement('div');
+    const titleRowEl = activeDocument.createElement('div') as HTMLDivElement;
     titleRowEl.className = 'daily-notes-timeline-item-header';
 
-    const titleEl = document.createElement('a');
+    const titleEl = activeDocument.createElement('a') as HTMLAnchorElement;
     titleEl.className = 'daily-notes-timeline-item-title';
     titleEl.textContent = options.file.basename;
     titleEl.href = options.file.path;
@@ -32,7 +32,7 @@ export function createNoteElements(options: NoteElementOptions): NoteElements {
 
     titleRowEl.appendChild(titleEl);
 
-    const bodyEl = document.createElement('div');
+    const bodyEl = activeDocument.createElement('div') as HTMLDivElement;
     bodyEl.className = 'daily-notes-timeline-item-body';
 
     noteEl.appendChild(titleRowEl);

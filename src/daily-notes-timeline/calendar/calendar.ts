@@ -5,7 +5,7 @@ import { getDateFromKey, toISODateKey } from '../data';
 type CalendarOptions = {
     contentEl: HTMLElement;
     settings: DailyNotesTimelineSettings;
-    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     onScrollToToday: () => void;
     onJumpToDateKey: (dateKey: string) => void;
     onQueueSettingsSave: () => void;

@@ -1,4 +1,4 @@
-import { App, TFile } from 'obsidian';
+import { App, Component, TAbstractFile, TFile, WorkspaceLeaf } from 'obsidian';
 import { DailyNotesTimelineSettings } from '../../settings';
 import { DailyNotesConfig, getDateKeyFromFile, isDailyNotePath, toISODateKey } from '../data';
 import { TimelineFilterMode } from '../filters';
@@ -13,11 +13,11 @@ import { appHasDailyNotesPluginLoaded, DEFAULT_DAILY_NOTE_FORMAT, getDailyNoteSe
 type ControllerOptions = {
     app: App;
     contentEl: HTMLElement;
-    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     onSettingsChange?: () => Promise<void>;
     settings: DailyNotesTimelineSettings;
     debugLog: (message: string, details?: Record<string, unknown>) => void;
-    markdownComponent: any;
+    markdownComponent: Component & { app: App };
     isLeafDeferred?: () => boolean;
 };
 
@@ -206,7 +206,7 @@ export class DailyNotesTimelineController {
         return this.queueRefresh({ preserveScroll: false, clearFilteredCache: false });
     }
 
-    onActiveLeafChange(leaf: any, isCurrentLeaf: boolean) {
+    onActiveLeafChange(leaf: WorkspaceLeaf | null, isCurrentLeaf: boolean) {
         if (isCurrentLeaf && this.pendingRefresh) {
             void this.handleViewActivated();
         }
@@ -494,7 +494,7 @@ export class DailyNotesTimelineController {
         this.dateKeyCache.delete(path);
     }
 
-    async onVaultModify(file: TFile | any): Promise<void> {
+    async onVaultModify(file: TAbstractFile): Promise<void> {
         if (!(file instanceof TFile)) {
             return;
         }
@@ -516,7 +516,7 @@ export class DailyNotesTimelineController {
         this.scheduleRefresh({ preserveScroll: true, clearFilteredCache: false });
     }
 
-    onVaultCreate(file: TFile | any) {
+    onVaultCreate(file: TAbstractFile) {
         if (!(file instanceof TFile)) {
             return;
         }
@@ -539,7 +539,7 @@ export class DailyNotesTimelineController {
         this.scheduleRefresh({ preserveScroll: true, clearFilteredCache: false });
     }
 
-    onVaultDelete(file: TFile | any) {
+    onVaultDelete(file: TAbstractFile) {
         if (!(file instanceof TFile)) {
             return;
         }
@@ -562,7 +562,7 @@ export class DailyNotesTimelineController {
         this.scheduleRefresh({ preserveScroll: true, clearFilteredCache: false });
     }
 
-    onVaultRename(file: TFile | any, oldPath?: string) {
+    onVaultRename(file: TAbstractFile, oldPath?: string) {
         if (!(file instanceof TFile)) {
             return;
         }

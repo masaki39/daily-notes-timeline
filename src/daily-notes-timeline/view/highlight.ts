@@ -3,7 +3,7 @@ function escapeRegExp(text: string): string {
 }
 
 function isExcludedNode(node: Node | null): boolean {
-    if (!node || !(node instanceof HTMLElement)) {
+    if (!node || !node.instanceOf(HTMLElement)) {
         return false;
     }
     const tag = node.tagName;
@@ -21,7 +21,7 @@ export function highlightMatches(container: HTMLElement, query: string) {
     const pattern = terms.map(term => escapeRegExp(term)).join('|');
     const regex = new RegExp(pattern, 'gi');
     const testRegex = new RegExp(pattern, 'i');
-    const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
+    const walker = activeDocument.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
         acceptNode: (node) => {
             if (!node.parentElement) {
                 return NodeFilter.FILTER_REJECT;
@@ -50,23 +50,23 @@ export function highlightMatches(container: HTMLElement, query: string) {
             continue;
         }
         regex.lastIndex = 0;
-        const fragment = document.createDocumentFragment();
+        const fragment = activeDocument.createDocumentFragment();
         let lastIndex = 0;
         let match: RegExpExecArray | null;
         while ((match = regex.exec(text)) !== null) {
             const start = match.index;
             const end = start + match[0].length;
             if (start > lastIndex) {
-                fragment.appendChild(document.createTextNode(text.slice(lastIndex, start)));
+                fragment.appendChild(activeDocument.createTextNode(text.slice(lastIndex, start)));
             }
-            const mark = document.createElement('mark');
+            const mark = activeDocument.createElement('mark');
             mark.className = 'daily-notes-timeline-highlight';
             mark.textContent = text.slice(start, end);
             fragment.appendChild(mark);
             lastIndex = end;
         }
         if (lastIndex < text.length) {
-            fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+            fragment.appendChild(activeDocument.createTextNode(text.slice(lastIndex)));
         }
         textNode.parentNode?.replaceChild(fragment, textNode);
     }

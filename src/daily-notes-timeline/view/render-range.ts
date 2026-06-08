@@ -1,4 +1,4 @@
-import { App, MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
+import { App, Component, MarkdownRenderChild, MarkdownRenderer, TFile } from 'obsidian';
 import { createNoteElements } from './render';
 import { attachTimelineLinkHandler } from './links';
 import { attachTaskToggleHandler } from './tasks';
@@ -10,14 +10,14 @@ type RenderNoteOptions = {
     file: TFile;
     noteIndex: number;
     position: 'append' | 'prepend';
-    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     onOpenFile: (file: TFile, openInNewLeaf: boolean) => void;
     onOpenLink: (href: string, sourcePath: string, openInNewLeaf: boolean, isExternal: boolean) => void;
     onToggleTask: (file: TFile, lineIndex: number, checked: boolean) => Promise<void>;
     activeFilter: TimelineFilterMode;
     headingFilterText: string;
     searchQuery: string;
-    markdownComponent: any;
+    markdownComponent: Component & { app: App };
     resolveFilteredContent: (file: TFile) => Promise<string | null>;
     resolveRawContent: (file: TFile) => Promise<string>;
     resolveLinkSourcePath: (file: TFile) => string;
@@ -32,7 +32,7 @@ export type RenderNoteResult = {
 type RenderNoteContentOptions = {
     bodyEl: HTMLDivElement;
     file: TFile;
-    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     onOpenLink: (href: string, sourcePath: string, openInNewLeaf: boolean, isExternal: boolean) => void;
     onToggleTask: (file: TFile, lineIndex: number, checked: boolean) => Promise<void>;
     activeFilter: TimelineFilterMode;

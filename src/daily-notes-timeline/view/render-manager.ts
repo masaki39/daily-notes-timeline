@@ -1,11 +1,11 @@
-import { App, MarkdownRenderChild, TFile } from 'obsidian';
+import { App, Component, MarkdownRenderChild, TFile } from 'obsidian';
 import { filterTimelineContent, TimelineFilterMode } from '../filters';
 import { renderNote, renderNoteContent } from './render-range';
 
 type RenderManagerOptions = {
     app: App;
-    markdownComponent: any;
-    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    markdownComponent: Component & { app: App };
+    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     onOpenFile: (file: TFile, openInNewLeaf: boolean) => void;
     onOpenLink: (href: string, sourcePath: string, openInNewLeaf: boolean, isExternal: boolean) => void;
     onToggleTask: (file: TFile, lineIndex: number, checked: boolean) => Promise<void>;
@@ -18,8 +18,8 @@ type RenderManagerOptions = {
 
 export class TimelineRenderManager {
     private app: App;
-    private markdownComponent: any;
-    private registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    private markdownComponent: Component & { app: App };
+    private registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     private onOpenFile: (file: TFile, openInNewLeaf: boolean) => void;
     private onOpenLink: (href: string, sourcePath: string, openInNewLeaf: boolean, isExternal: boolean) => void;
     private onToggleTask: (file: TFile, lineIndex: number, checked: boolean) => Promise<void>;
@@ -78,13 +78,13 @@ export class TimelineRenderManager {
     cleanupRenderedNote(noteEl: HTMLElement) {
         const child = this.renderedChildren.get(noteEl);
         if (!child) {
-            const path = (noteEl as HTMLElement).dataset.path;
+            const path = noteEl.dataset.path;
             if (path) {
                 this.renderedByPath.delete(path);
             }
             return;
         }
-        const path = (noteEl as HTMLElement).dataset.path;
+        const path = noteEl.dataset.path;
         if (path) {
             this.renderedByPath.delete(path);
         }

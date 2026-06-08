@@ -1,4 +1,4 @@
-type RegisterDomEvent = (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+type RegisterDomEvent = (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
 
 export function attachTimelineLinkHandler(
     registerDomEvent: RegisterDomEvent,

@@ -2,7 +2,7 @@
 	"id": "daily-notes-timeline-view",
 	"name": "Daily Notes Timeline View",
 	"version": "0.0.7",
-	"minAppVersion": "0.15.0",
+	"minAppVersion": "1.7.2",
 	"description": "Timeline view for daily notes.",
 	"author": "masaki39",
 	"authorUrl": "https://github.com/masaki39",

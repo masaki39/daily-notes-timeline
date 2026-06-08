@@ -71,7 +71,7 @@ export class DailyNotesTimelineView extends ItemView {
     }
 
     private debugLog(message: string, details?: Record<string, unknown>) {
-        if (!(window as any)?.[this.debugFlag]) {
+        if (!(window as unknown as Record<string, unknown>)[this.debugFlag]) {
             return;
         }
         if (details && Object.keys(details).length > 0) {

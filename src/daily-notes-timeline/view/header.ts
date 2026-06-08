@@ -2,7 +2,7 @@ import { TimelineFilterMode } from '../filters/filter';
 
 type HeaderOptions = {
     contentEl: HTMLElement;
-    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     activeFilter: TimelineFilterMode;
     headingFilterText: string;
     searchQuery: string;

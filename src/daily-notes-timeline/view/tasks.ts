@@ -5,7 +5,7 @@ type TaskToggleOptions = {
     app: App;
     container: HTMLElement;
     file: TFile;
-    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     activeFilter: TimelineFilterMode;
     headingFilterText: string;
     filteredContent: string;
@@ -79,7 +79,7 @@ export function mapTaskLineIndices(
 }
 
 export async function attachTaskToggleHandler(options: TaskToggleOptions): Promise<void> {
-    const checkboxes = Array.from(options.container.querySelectorAll('input[type="checkbox"]')) as HTMLInputElement[];
+    const checkboxes = Array.from(options.container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]'));
     if (checkboxes.length === 0) {
         return;
     }

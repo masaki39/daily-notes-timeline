@@ -7,7 +7,7 @@ import { getTopVisibleDateKey, getTopVisibleOffset } from '../scroll/visibility'
 
 type ScrollManagerOptions = {
     contentEl: HTMLElement;
-    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     getNoteFiles: () => TFile[];
     getStartIndex: () => number;
     setStartIndex: (value: number) => void;
@@ -25,7 +25,7 @@ type ScrollManagerOptions = {
 
 export class TimelineScrollManager {
     private contentEl: HTMLElement;
-    private registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    private registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     private getNoteFiles: () => TFile[];
     private getStartIndex: () => number;
     private setStartIndex: (value: number) => void;
@@ -218,7 +218,7 @@ export class TimelineScrollManager {
             return;
         }
         this.debugLog('scrollToIndex', { targetIndex, startIndex: this.getStartIndex() });
-        requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
             if (!this.scrollerEl) {
                 return;
             }
@@ -237,7 +237,7 @@ export class TimelineScrollManager {
             return;
         }
         this.debugLog('scrollToDateKey', { dateKey, offset });
-        requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
             scrollElementToOffset(targetEl, this.scrollerEl, offset);
             this.scheduleTopVisibleUpdate();
         });

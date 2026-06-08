@@ -6,7 +6,7 @@ import { buildTimelineHeader } from './header';
 type TimelineControllerUiOptions = {
     contentEl: HTMLElement;
     settings: DailyNotesTimelineSettings;
-    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => any) => void;
+    registerDomEvent: (el: HTMLElement, type: string, callback: (event: Event) => void) => void;
     onFilterChange: (mode: TimelineFilterMode) => void;
     onHeadingInput: (value: string) => void;
     onSearchInput: (value: string) => void;
