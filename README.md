@@ -1,6 +1,6 @@
 # Daily Notes Timeline
 
-[![GitHub Release](https://img.shields.io/github/v/release/masaki39/daily-notes-timeline?sort=semver&label=latest&color=%237c3aed)](https://github.com/masaki39/daily-notes-timeline/releases/latest) [![Total Downloads](https://img.shields.io/github/downloads/masaki39/daily-notes-timeline/main.js?logo=obsidian&label=total%20downloads&color=%237c3aed)](https://github.com/masaki39/daily-notes-timeline/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/masaki39/daily-notes-timeline?sort=semver&label=latest&color=%237c3aed)](https://github.com/masaki39/daily-notes-timeline/releases/latest) [![Total Downloads](https://img.shields.io/badge/dynamic/json?logo=obsidian&url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22daily-notes-timeline-view%22%5D.downloads&label=total%20downloads&color=%237c3aed)](https://obsidian.md/plugins?id=daily-notes-timeline-view)
 
 Timeline view for Obsidian daily notes, focused on browsing and review.
 
