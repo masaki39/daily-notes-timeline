@@ -1,6 +1,7 @@
 import { Plugin } from 'obsidian';
 import { DailyNotesTimelineModule } from './daily-notes-timeline';
 import { DEFAULT_SETTINGS, DailyNotesTimelineSettings } from './settings';
+import { DailyNotesTimelineSettingTab } from './settings-tab';
 
 export default class DailyNotesTimelinePlugin extends Plugin {
 	settings: DailyNotesTimelineSettings;
@@ -13,6 +14,7 @@ export default class DailyNotesTimelinePlugin extends Plugin {
 			await this.saveSettings();
 		});
 		this.timelineModule.onload();
+		this.addSettingTab(new DailyNotesTimelineSettingTab(this.app, this, this.settings));
 	}
 
 	onunload() {
